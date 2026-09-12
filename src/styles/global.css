@@ -1,1 +1,103 @@
+/* src/styles/global.css
+   Tailwind v4 keeps theme tokens in CSS, not in tailwind.config.js.
+   Import this once in your base layout:  import '../styles/global.css'
+   If you are on Tailwind v3 instead, see the bottom of this file. */
+
 @import "tailwindcss";
+
+@theme {
+  /* ---- palette ---------------------------------------------------------
+     Four blues, one near-white page. Do not add a fifth hue.
+     Ratios noted are against white unless stated.                        */
+
+  --color-ink:  #1B262C;  /* 15.44:1 — hero, footer, all body text        */
+  --color-navy: #0F4C75;  /*  9.09:1 — second dark band, link text        */
+  --color-blue: #3282B8;  /*  4.18:1 — button fills on light only         */
+  --color-sky:  #BBE1FA;  /*  1.38:1 — backgrounds and accents only       */
+
+  --color-page: #F7F9FB;  /* page background, barely-blue white           */
+  --color-card: #FFFFFF;  /* card surfaces                                */
+  --color-line: #E3E9EF;  /* hairline dividers and card borders           */
+  --color-muted:#5B6A75;  /*  5.06:1 — secondary copy on light backgrounds */
+
+  /* ---- type ------------------------------------------------------------ */
+
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  --text-display:    3rem;
+  --text-display--line-height: 1.1;
+  --text-section:    1.875rem;
+  --text-section--line-height: 1.2;
+  --text-card:       1.125rem;
+  --text-card--line-height: 1.4;
+  --text-meta:       0.8125rem;
+
+  /* ---- rhythm ---------------------------------------------------------- */
+
+  --spacing-section:    9rem;   /* between sections, desktop */
+  --spacing-section-sm: 5rem;   /* between sections, mobile  */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.7;
+  }
+
+  /* Body copy stays under ~68 characters per line. */
+  .prose-measure { max-width: 34rem; }
+
+  /* Inline links use navy, never blue — blue is 4.18:1 and misses the
+     4.5:1 floor for normal-size text. */
+  a { color: var(--color-navy); }
+
+  /* Visible focus everywhere. Sky reads on the dark bands, navy on light. */
+  :focus-visible {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 2px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-sky);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* One container, used by every section. Change the max-width here and the
+     whole site re-flows. */
+  .container-site {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 64rem;
+    padding-inline: 1.5rem;
+  }
+}
+
+/* ---- button patterns ---------------------------------------------------
+   Two styles, and which one you use depends on the background behind it.
+
+   On light backgrounds (page / card):
+     primary    bg-navy text-white       <- 9.09:1, hover to bg-blue
+     secondary  bg-card text-ink border border-line
+
+   White text on blue is 4.18:1, which misses the 4.5:1 floor for normal-size
+   label text. Navy fills instead; blue becomes the hover state. If you really
+   want a blue button, its label must be >=18px bold or >=24px regular.
+
+   On dark backgrounds (ink / navy):
+     primary    bg-sky text-ink          <- 11.22:1
+     secondary  bg-transparent text-sky border border-sky
+
+   Never put a blue button on ink (3.69:1) or navy (2.17:1). It looks fine
+   on your monitor at night and disappears on a phone in daylight.
+------------------------------------------------------------------------- */
+
+

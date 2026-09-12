@@ -1,17 +1,44 @@
 ---
-import '../styles/global.css';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site, cta } from "../config";
+import PantherLogo from "../components/PantherLogo.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+  <!-- Hero. The only centred block on the site; everything below is
+       left-aligned. Sections come in Phase 2. -->
+  <section class="bg-ink text-white">
+    <div class="container-site flex flex-col items-center py-24 text-center">
+            <div class="mb-8"><PantherLogo size="lg" /></div>
+
+      <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
+        Hey, I'm {site.name}
+      </h1>
+
+      <p class="mt-4 max-w-md text-white/80">
+        {site.description}
+      </p>
+
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a
+          href={cta.href}
+          class="rounded-md bg-sky px-5 py-2.5 text-sm font-semibold text-ink hover:bg-white"
+        >
+          Subscribe to the newsletter
+        </a>
+        <a
+          href="/now"
+          class="rounded-md border border-white/25 px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10"
+        >
+          See what I'm doing now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Placeholder so you can see the page background and the footer
+       sitting correctly. Delete this in Phase 2. -->
+  <section class="container-site py-24">
+    <p class="text-muted">Sections go here.</p>
+  </section>
+</BaseLayout>

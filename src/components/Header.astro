@@ -1,0 +1,109 @@
+---
+import { site, nav, cta } from "../config";
+import Logo from "./Logo.astro";
+
+// Used to mark the current page in the nav.
+const path = Astro.url.pathname;
+---
+
+<header class="bg-ink text-white">
+  <div class="container-site flex items-center justify-between py-5">
+    <a href="/" class="hover:opacity-90">
+  <Logo />
+</a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-8 md:flex" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={path === item.href ? "page" : undefined}
+            class:list={[
+              "text-sm hover:text-sky",
+              path === item.href ? "text-sky" : "text-white/80",
+            ]}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <!-- Buttons on dark bands are sky fill with ink text: 11.22:1. -->
+      <a
+        href={cta.href}
+        class="rounded-md bg-sky px-4 py-2 text-sm font-semibold text-ink hover:bg-white"
+      >
+        {cta.label}
+      </a>
+    </nav>
+
+    <!-- Mobile toggle -->
+    <button
+      id="menu-button"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+      class="rounded p-2 text-white md:hidden"
+    >
+      <span class="sr-only">Open menu</span>
+      <svg
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <line x1="3" y1="7" x2="21" y2="7"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="17" x2="21" y2="17"></line>
+      </svg>
+    </button>
+  </div>
+
+  <nav
+    id="mobile-nav"
+    hidden
+    aria-label="Main"
+    class="container-site pb-6 md:hidden"
+  >
+    <ul class="flex flex-col gap-4">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={path === item.href ? "page" : undefined}
+              class="text-white/90 hover:text-sky"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a
+          href={cta.href}
+          class="inline-block rounded-md bg-sky px-4 py-2 text-sm font-semibold text-ink"
+        >
+          {cta.label}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  // Kept deliberately small. `hidden` is a real HTML attribute, so the menu
+  // is closed for everyone — including screen readers — until it's opened.
+  const button = document.getElementById("menu-button");
+  const menu = document.getElementById("mobile-nav");
+
+  button?.addEventListener("click", () => {
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+    button.setAttribute("aria-expanded", String(!isOpen));
+    menu?.toggleAttribute("hidden", isOpen);
+  });
+</script>

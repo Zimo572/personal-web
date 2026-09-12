@@ -1,0 +1,65 @@
+---
+import { site, nav, socials, legal } from "../config";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-ink text-white/80">
+  <div class="container-site py-16">
+    <div class="grid gap-10 sm:grid-cols-3">
+      <div>
+        <h2 class="mb-4 text-sm font-semibold text-white">Site links</h2>
+        <ul class="flex flex-col gap-2">
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href} class="text-sm text-white/80 hover:text-sky">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="mb-4 text-sm font-semibold text-white">Legal</h2>
+        <ul class="flex flex-col gap-2">
+          {
+            legal.map((item) => (
+              <li>
+                <a href={item.href} class="text-sm text-white/80 hover:text-sky">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="mb-4 text-sm font-semibold text-white">Find me</h2>
+        <ul class="flex flex-col gap-2">
+          {
+            socials.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  rel="me noopener"
+                  target="_blank"
+                  class="text-sm text-white/80 hover:text-sky"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <p class="mt-12 border-t border-white/10 pt-6 text-sm text-white/60">
+      &copy; {year} {site.name}
+    </p>
+  </div>
+</footer>

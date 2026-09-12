@@ -1,0 +1,71 @@
+---
+interface Props {
+  size?: "sm" | "lg";
+}
+
+const { size = "sm" } = Astro.props;
+---
+
+<span class:list={["logo", size]}>
+  <span class="g g1">s</span>l<span class="g g2">e</span><span class="g g3">o</span
+  >par
+</span>
+
+<style>
+  /* Outfit is already loaded in BaseLayout's <head> — don't @import it again. */
+  .logo {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+    color: rgb(255 255 255 / 0.55);
+  }
+
+  .sm {
+    font-size: 1.125rem;
+  }
+
+  .lg {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+  }
+
+  /* The lit state is the RESTING state. If the animation never runs —
+     reduced motion, old browser, JS-free — the reveal is already there. */
+  .g {
+    display: inline-block;
+    color: var(--color-sky);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .g {
+      animation: reveal 3.6s ease-in-out infinite;
+    }
+    .g2 {
+      animation-delay: 0.12s;
+    }
+    .g3 {
+      animation-delay: 0.24s;
+    }
+  }
+
+    @keyframes reveal {
+    0% {
+      color: rgb(255 255 255 / 0.38);
+      transform: translateY(0);
+    }
+    8% {
+      color: var(--color-sky);
+      transform: translateY(-4px);
+    }
+    16%,
+    70% {
+      color: var(--color-sky);
+      transform: translateY(0);
+    }
+    86%,
+    100% {
+      color: rgb(255 255 255 / 0.38);
+      transform: translateY(0);
+    }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+interface Props {
+  size?: "sm" | "lg";
+  class?: string;
+}
+
+const { size = "sm", class: className } = Astro.props;
+const px = size === "lg" ? 132 : 30;
+---
+
+<svg
+  class:list={["panther", className]}
+  width={px}
+  height={px}
+  viewBox="0 0 100 100"
+  role="img"
+  aria-label="Sleopar"
+>
+  <polygon class="fur" points="21,38 25,13 43,27"></polygon>
+  <polygon class="fur" points="79,38 75,13 57,27"></polygon>
+  <path
+    class="fur"
+    d="M50 17 Q77 17 81 43 Q85 69 62 83 Q50 90 38 83 Q15 69 19 43 Q23 17 50 17 Z"
+  ></path>
+  <polygon class="eye" points="32,45 46,50 44,57 31,53"></polygon>
+  <polygon class="eye" points="68,45 54,50 56,57 69,53"></polygon>
+  <polygon class="nose" points="45,64 55,64 50,71"></polygon>
+</svg>
+
+<style>
+  .fur {
+    fill: var(--color-blue);
+  }
+
+  .nose {
+    fill: var(--color-ink);
+  }
+
+  .eye {
+    fill: var(--color-sky);
+    /* transform-box makes transform-origin resolve against the shape itself
+       rather than the whole SVG canvas. Without it the eyes fly off-centre. */
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .eye {
+      animation: blink 5s steps(1, end) infinite;
+    }
+  }
+
+  @keyframes blink {
+    0%,
+    93%,
+    100% {
+      transform: scaleY(1);
+    }
+    95%,
+    96% {
+      transform: scaleY(0.1);
+    }
+  }
+</style>
