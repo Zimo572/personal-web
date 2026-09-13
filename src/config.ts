@@ -5,14 +5,14 @@ export const site = {
   name: "Zach",
   tagline: "Writing & Building",
   description:
-    "I Share Everything I Learn About SEO here",
+    "I Share Everything I Learn About SEO Here",
   // Netlify gives you this after your first deploy. Paste it in then.
   url: "https://example.netlify.app",
 };
 
 export const nav = [
   { label: "Now", href: "/now" },
-  { label: "Building", href: "/building" },
+  { label: "Build Skill", href: "/build-skill" },
   { label: "Writing", href: "/writing" },
   { label: "Threads", href: "/threads" },
 ];
@@ -33,3 +33,8 @@ export const legal = [
   { label: "Privacy policy", href: "/privacy-policy" },
   { label: "Terms and conditions", href: "/terms-conditions" },
 ];
+
+export const secondaryCta = {
+  label: "Build Skill",
+  href: "/build-skill",
+}

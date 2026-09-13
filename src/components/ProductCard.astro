@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href: string;
+  action: string;
+  image?: string;
+  tone?: "navy" | "blue" | "ink";
+}
+
+const {
+  title,
+  description,
+  href,
+  action,
+  image,
+  tone = "navy",
+} = Astro.props;
+
+// Until you have cover images, each card gets a solid block from the palette.
+const tones = {
+  navy: "bg-navy",
+  blue: "bg-blue",
+  ink: "bg-ink",
+};
+---
+
+<article
+  class="flex flex-col overflow-hidden rounded-lg border border-line bg-card"
+>
+  {
+    image ? (
+      <img
+        src={image}
+        alt=""
+        width="600"
+        height="340"
+        class="h-44 w-full object-cover"
+      />
+    ) : (
+      <div class={`h-44 w-full ${tones[tone]}`} />
+    )
+  }
+
+  <div class="flex flex-1 flex-col p-6">
+    <h3 class="text-base font-semibold">{title}</h3>
+    <p class="mt-2 text-sm text-muted">{description}</p>
+
+    <!-- mt-auto pins the button to the bottom, so buttons line up across
+         cards even when descriptions are different lengths. -->
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener"
+      class="mt-auto block rounded-md border border-line px-4 py-2.5 pt-2.5 text-center text-sm font-medium transition-colors hover:border-blue hover:text-navy"
+    >
+      {action}
+    </a>
+  </div>
+</article>

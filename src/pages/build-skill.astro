@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProductCard from "../components/ProductCard.astro";
+
+// Your products. Add or remove entries here and the grid updates itself —
+// you never touch the markup below. In Phase 3 these move into Markdown
+// files, but a plain array is the right amount of machinery for now.
+const products = [
+  {
+    title: "Replace with your product name",
+    description:
+      "One or two sentences on what it is and who it helps. Keep it concrete.",
+    action: "Get it on Gumroad",
+    href: "https://yourname.gumroad.com/l/product-slug",
+    tone: "navy" as const,
+  },
+  {
+    title: "Second product",
+    description: "What it covers and what someone walks away able to do.",
+    action: "Download it",
+    href: "https://yourname.gumroad.com/l/second-slug",
+    tone: "blue" as const,
+  },
+  {
+    title: "Third product",
+    description: "Short, specific, no filler.",
+    action: "Check it out",
+    href: "https://yourname.gumroad.com/l/third-slug",
+    tone: "ink" as const,
+  },
+];
+---
+
+<BaseLayout
+  title="Build Skill"
+  description="Digital products to help you learn SEO faster."
+>
+  <section class="container-site py-24">
+    <h1 class="text-4xl font-bold tracking-tight">Build Skill</h1>
+
+    <p class="mt-4 max-w-xl text-muted">
+      Everything I've made to help you learn SEO faster — guides, templates,
+      and courses built from what I'm testing in public.
+    </p>
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {products.map((p) => <ProductCard {...p} />)}
+    </div>
+  </section>
+</BaseLayout>
