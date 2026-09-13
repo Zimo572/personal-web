@@ -1,0 +1,100 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import EpisodeRow from "../components/EpisodeRow.astro";
+import { podcastLinks } from "../config";
+
+// Hardcoded for now. These move into Markdown files in Phase 3, same as
+// the articles — the shape of the data won't change, only where it lives.
+const episodes = [
+  {
+    title: "Episode 3: Replace with your episode title",
+    description:
+      "A sentence or two on what you covered and who it's for. Specific beats clever.",
+    href: "https://your-podcast-host.com/episode-3",
+    duration: "32 min listen",
+  },
+  {
+    title: "Episode 2: Second episode",
+    description: "What the listener walks away knowing that they didn't before.",
+    href: "https://your-podcast-host.com/episode-2",
+    duration: "28 min listen",
+  },
+  {
+    title: "Episode 1: Where this started",
+    description: "Why you're doing this and what the show is going to be.",
+    href: "https://your-podcast-host.com/episode-1",
+    duration: "19 min listen",
+  },
+];
+---
+
+<BaseLayout
+  title="Podcast"
+  description="Conversations about SEO, and everything I'm learning out loud."
+>
+  <section class="container-site py-24">
+    <h1 class="text-4xl font-bold tracking-tight">Podcast</h1>
+
+    <p class="mt-4 max-w-xl text-muted">
+      Conversations about SEO and what I'm testing in public. Listen wherever
+      you already listen to things.
+    </p>
+
+    <!-- Platform links. Plain labelled pills rather than brand logos —
+         see the note in chat about why. -->
+    <ul class="mt-8 flex flex-wrap gap-3">
+      {
+        podcastLinks.map((p) => (
+          <li>
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener"
+              class="inline-block rounded-full border border-line bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-blue hover:text-navy"
+            >
+              {p.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-12 max-w-md">
+      <label for="q" class="block text-sm font-medium">Search episodes</label>
+      <input
+        id="q"
+        type="search"
+        autocomplete="off"
+        placeholder="Try a keyword or guest name"
+        class="mt-2 w-full rounded-md border border-line bg-card px-4 py-2.5 text-sm outline-none focus:border-blue focus:ring-2 focus:ring-blue/30"
+      />
+    </div>
+
+    <div id="list" class="mt-10">
+      {episodes.map((e) => <EpisodeRow {...e} />)}
+    </div>
+
+    <p id="empty" hidden class="mt-10 text-muted">
+      No episodes match that. Try a shorter word.
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById("q") as HTMLInputElement | null;
+  const list = document.getElementById("list");
+  const empty = document.getElementById("empty");
+
+  input?.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+
+    list?.querySelectorAll<HTMLElement>("[data-search]").forEach((row) => {
+      const match = row.dataset.search?.includes(q) ?? false;
+      row.hidden = !match;
+      if (match) visible++;
+    });
+
+    empty?.toggleAttribute("hidden", visible > 0);
+  });
+</script>

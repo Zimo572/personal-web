@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import { socials } from "../config";
+
+// Hardcoded for now. In Phase 3 these become Markdown files and this array
+// disappears — the page will read the folder instead.
+const articles = [
+  {
+    title: "Replace with your article title",
+    description: "One sentence on what the reader gets out of it.",
+    href: "/articles/first-post",
+    date: "2026-09-13",
+  },
+  {
+    title: "Second article",
+    description: "Keep these specific — they do the work of selling the click.",
+    href: "/articles/second-post",
+    date: "2026-09-06",
+  },
+  {
+    title: "Third article",
+    description: "Short and concrete beats clever every time.",
+    href: "/articles/third-post",
+    date: "2026-08-30",
+  },
+];
+
+const twitter = socials.find((s) => s.label === "Twitter");
+const linkedin = socials.find((s) => s.label === "LinkedIn");
+---
+
+<BaseLayout
+  title="Articles"
+  description="Everything I'm learning about SEO, written up in long form."
+>
+  <section class="container-site py-24">
+    <h1 class="text-4xl font-bold tracking-tight">Articles</h1>
+
+    <p class="mt-4 max-w-xl text-muted">
+      Here is a page where I share small bites of what I learn about SEO
+    </p>
+
+    <!-- Search. A <label> rather than placeholder-only text, so the field
+         still makes sense once someone starts typing. -->
+    <div class="mt-10 max-w-md">
+      <label for="q" class="block text-sm font-medium">
+        Search articles
+      </label>
+      <input
+        id="q"
+        type="search"
+        autocomplete="off"
+        placeholder="Try a keyword"
+        class="mt-2 w-full rounded-md border border-line bg-card px-4 py-2.5 text-sm outline-none focus:border-blue focus:ring-2 focus:ring-blue/30"
+      />
+    </div>
+
+    <div id="grid" class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {articles.map((a) => <ArticleCard {...a} />)}
+    </div>
+
+    <p id="empty" hidden class="mt-14 text-muted">
+      Nothing matches that. Try a shorter word.
+    </p>
+  </section>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById("q") as HTMLInputElement | null;
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+
+  input?.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    let visible = 0;
+
+    // Each card carries a data-search attribute built at render time,
+    // so filtering never touches the DOM's text content.
+    grid?.querySelectorAll<HTMLElement>("[data-search]").forEach((card) => {
+      const match = card.dataset.search?.includes(q) ?? false;
+      card.hidden = !match;
+      if (match) visible++;
+    });
+
+    empty?.toggleAttribute("hidden", visible > 0);
+  });
+</script>

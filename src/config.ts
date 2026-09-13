@@ -7,14 +7,13 @@ export const site = {
   description:
     "I Share Everything I Learn About SEO Here",
   // Netlify gives you this after your first deploy. Paste it in then.
-  url: "https://example.netlify.app",
+  url: "https://elaborate-granita-c070e5.netlify.app/",
 };
 
 export const nav = [
-  { label: "Now", href: "/now" },
   { label: "Build Skill", href: "/build-skill" },
-  { label: "Writing", href: "/writing" },
-  { label: "Threads", href: "/threads" },
+  { label: "Articles", href: "/articles" },
+  { label: "Podcast", href: "/podcast" },
 ];
 
 // The one action you want people to take. Points at your newsletter.
@@ -38,3 +37,10 @@ export const secondaryCta = {
   label: "Build Skill",
   href: "/build-skill",
 }
+
+export const podcastLinks = [
+  { label: "Apple Podcasts", href: "https://podcasts.apple.com/..." },
+  { label: "Spotify", href: "https://open.spotify.com/show/..." },
+  { label: "YouTube", href: "https://youtube.com/@yourhandle" },
+  { label: "Email", href: "https://yoursubstack.substack.com/subscribe" },
+];
